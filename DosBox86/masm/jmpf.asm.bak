@@ -1,0 +1,10 @@
+code segment
+assume cd:code
+main:
+	;jmp
+	db 0eah
+	dw 7856h
+	dw 3412h
+	;dd 0ffff0000h;计算机会重启
+code ends
+end main

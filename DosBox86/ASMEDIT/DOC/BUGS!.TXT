@@ -1,0 +1,96 @@
+Known BUGS/INCOMPATIBILITIES of ASM Edit:
+
+-------------------------------------------------------------------------------
+
+BUG     : When running ASM Edit as a tool under BP 7.0 IDE and I call TLINK
+          my computer hangs after returning to the IDE.
+
+SOURCE  : Incompatible versions of the DPMI Loader
+
+SOLUTION: - Use the same version of DPMILOAD.EXE for both BP and TLINK
+            ( We don't know if BP really needs DPMILOAD.EXE, but TLINK with
+            version 1.0 didn't work. v1.1 did it then. )
+
+-------------------------------------------------------------------------------
+
+BUG     : My mouse is jerky (especially when using the extended video modes).
+
+SOURCE  : Incompatible mouse driver.
+
+SOLUTION: - Use another driver. 
+            Logitech : v6.02
+            Microsoft: v8.x and up
+
+-------------------------------------------------------------------------------
+
+BUG     : Some of the extended video modi show actually as 80x25.
+
+SOURCE  : Your graphic card or VESA driver doesn't support these modi. 
+
+SOLUTION: - Use another VESA driver (ask your dealer or use UNIVBE 5.1).
+          - Buy a more recent SVGA card.
+
+-------------------------------------------------------------------------------
+
+BUG     : When running ASM Edit under Windows 95 in a window and using any 
+          other resolution than 80x25 I get a hang up.
+
+SOURCE  : Incompatibilies between ASM Edit's and Windows 95's display
+          drivers.
+
+SOLUTION: - Run ASM Edit only in Fullscreen mode. (It's faster, believe me!)
+
+-------------------------------------------------------------------------------
+
+BUG     : When running ASM Edit and using TLINK my computer hangs or TLINK
+          reports a 'Application load & execute error 0001'.
+
+SOURCE  : Incompatible versions of the DPMI Loader, DPMI host, etc.
+
+SOLUTION: - Use the real mode version of TLINK or another DPMI version.
+          - Use ASM Edit's version of DPMI16BI.OVL and RTM.EXE (both copied
+            from Borland Pascal 7.0) also for TLINK.
+          - Set the following environment variables (optimized for 16 MB RAM):
+            SET DPMIMEM=MAXMEM4096
+            SET RTM=EXTLEAVE2048
+          - Create a DPMI host of your own, e.g. Quarterdeck's QDPMI.SYS.
+          - Load DPMIRES.EXE before starting ASM Edit.
+          see also: DPMI.TXT
+
+-------------------------------------------------------------------------------
+
+BUG     : When running ASM Edit and using a 32 bit Borland (e.g. from BC++ 
+          4.52) tool, my computer hangs.
+
+SOURCE  : Incompatible versions of the DPMI Loader, DPMI host, etc.
+
+SOLUTION: - Create a DPMI host of your own, e.g. Quarterdeck's QDPMI.SYS.
+          - Use 32RTM.EXE and DPMI32VM.OVL shipped with Borland C++.
+          - Load DPMIRES.EXE before starting ASM Edit.
+          see also: DPMI.TXT
+
+-------------------------------------------------------------------------------
+
+BUG     : When running ASM Edit and using PKZIP in the DOS Shell of ASM Edit
+          my computer hangs.
+
+SOURCE  : Incompatible versions of the DPMI Loader, DPMI host, etc.
+
+SOLUTION: - Create a DPMI host of your own, e.g. Quarterdeck's QDPMI.SYS.
+          - Try "PKZIP -)" to disable the usage of 32 bit DPMI by PKZIP.
+          see also: DPMI.TXT
+
+-------------------------------------------------------------------------------
+
+BUG     : When running ASM Edit under OS/2 and switching from Fullscreen mode
+          to Windowed it stops recognizing keys.
+
+SOURCE  : One of the special keys "hangs" thus creatings silly key codes.
+
+SOLUTION: - Press all ALT, CTRL and SHIFT keys simultanously.
+          - Close ASM Edit with the mouse and re-open it.
+          - Avoid switching ASM Edit from Windowed to Fullscreen mode and back.
+
+-------------------------------------------------------------------------------
+
+26/07/96  Olaf Krusche, Tilo Elstner

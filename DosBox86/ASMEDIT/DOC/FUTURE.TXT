@@ -1,0 +1,12 @@
+That's what we would implement if we had the time...
+
+- auto save function
+- smart skipping of assembly/linking with file exist & date/time compare
+- scheduler in Idle(), for background operations
+- folding of procedures and macros
+- native OS/2 version
+- HEX Editor
+- colored view of difference between two files
+- ??? Do *you* know?
+
+22/07/96  Olaf Krusche, Tilo Elstner

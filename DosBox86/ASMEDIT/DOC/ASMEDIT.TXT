@@ -1,0 +1,245 @@
+ASM Edit
+========
+
+A note before we begin: The following document is a short description of
+some features of ASM Edit and covers some important information for
+startup. During your work with the program you can always press the <F1>
+key to get detailed help on the current topic or function.
+
+Contents of this document
+=========================
+
+0.  Disclaimer, etc.
+1.  What is ASM Edit?
+2.  Requirements
+3.  DPMI usage
+4.  ASM Edit and the various Operating Systems
+5.  Getting started - Tutorial
+6.  The Editor
+7.  Using external programs
+8.  Tools - Disassembler
+9.  The Help System
+10. Technical details
+11. Contact the authors
+
+
+0. Disclaimer, etc.
+-------------------
+
+This software is provided "as is" and without warranties as to performance
+of merchantability or any other warranties whether expressed or implied.
+Because of the various hardware and software environments in which this
+program may be used, no warranty of fittness for a particular purpose is
+offered. Use it entirely at your own risk!
+
+This program is shareware. You can test it and check its usefullness for
+you before you actually buy the software. The trial period is 30 days. If
+you continue using the program after this time period you have to register
+it. If you don't register you will use the program as an illegal copy.
+
+You will receive the full version (personal registered to you) if you 
+register ASM Edit. This version has some important advantages:
+
+- You will get the newest version including all actual tutorial files.
+- No shareware page is popping up every 10 minutes.
+- the standalone program ASM Help for help access only
+- You get bugfixes/upgrades for minor changes FREE (e.g. if you register 
+  v1.8 you get all versions up to v1.89 for FREE, but NOT v1.9)
+- You can get technical support and help.
+- You can order upgrades for further full versions for a reduced price.
+                                     
+See the file ORDER.TXT for ordering the full version.
+
+If you want purchase a version of ASM Edit for commercial or govermental
+use, please contact us first. We have also interesting offers for Site 
+Licenses if you need more than 5 registrations.
+
+
+1. What is ASM Edit?
+--------------------
+
+ASM Edit is a DOS based easy-to-use IDE for all you assembler freaks out
+there.
+
+2. Requirements
+---------------
+
+ASM Edit requires:
+- 80386
+- VGA
+- at least DOS 3.0
+- about 500 Kbyte free DOS memory
+- 4096 KByte free disk space to install
+
+Recommended:
+- 80486 DX-33
+- SVGA with VESA support
+- DOS 5.0
+- 1024 KByte free memory (XMS or EMS)
+- additional 4096 KByte free disk space for swap file
+
+If you get messages like "Runtime error 251: No startup possible" or "DPMI 
+error while allocating real memory" you need more conventional memory. Please 
+unload some TSR or device drivers or adjust the settings of your DOS box.
+
+
+3. DPMI usage
+-------------
+
+Since v1.8 ASM Edit has been using Borland's DPMI16BI.OVL as 16-bit DPMI host.
+This way all of your memory can be used for work. If you want to use other
+DPMI programs (started via ASM Edit) write the following lines to your
+AUTOEXEC.BAT or enter them at the command prompt:
+
+        SET DPMIMEM=MAXMEMxxxx
+        SET RTM=EXTLEAVEyyyy
+
+where xxxx is the maximum amount of memory all DPMI programs can use for
+themselves and yyyy is the amount of memory the RTM loader leaves for other
+programs. (on a 16 MByte system: xxxx=4096 and yyyy=2096)
+
+The file AE.BAT contains the two lines already, please modify it to match
+your system.
+
+If you encounter problems with other DPMI programs, especially 32-bit ones
+(e.g. Borland's TLINK.EXE) set up a DPMI host yourself before starting
+ASM Edit: Use Quarterdeck's QDPMI.SYS (run it via CONFIG.SYS) and/or
+Borland's DPMIRES.EXE (start it at the command prompt). After that you
+can start ASM Edit and it should work fine. As long as a DPMI using
+program provides you with the feature you can also disable the usage of
+DPMI.
+
+4. ASM Edit and the various Operating Systems
+---------------------------------------------
+
+ASM Edit runs fine under pure DOS, OS/2, Windows 3.1/3.11, Windows 95,
+Windows NT and various DOS emulators (e.g. AIX RISC 6000).
+
+However, there are some important details for the external programs called
+by ASM Edit. This is mostly due to the DPMI interface and/or the complex
+settings possible for the DOS boxes by OS/2 and Windows. Please refer in
+the online Help of ASM Edit to the topics 'Configuring ASM Edit' and
+'Tutorial'.
+
+For OS/2 you will find the file 'OS2_SETT.TXT' which can be loaded in the
+'Settings dialog' - 'Session' - 'DOS Settings' via the 'Load' Button. The
+most important setting is the DPMI Interface. It should always be set to
+'Enabled' to avoid problems with TLINK v3.1 and other programs. Please
+adjust the memory amounts to your system. The numbers in 'OS2_SETT.TXT' are
+optimized for a 16 MByte system.
+
+Note: Don't forget to adjust the settings for all programs from which you
+want to start ASM Edit, e.g. Norton Commander!
+
+Most problems with Windows 95 in earlier versions have been fixed. But:
+Depending on the video driver you are using it is not possible to run
+ASM Edit windowed. Before testing the editor with Windows 95 create a PIF
+file for it by right-clicking on ASM Edit's icon and choosing 'Preferences'
+from the pop-up menu. In the 'Screen' section you will find a check box.
+Enable 'Full screen' and you should be able to run ASM Edit. After that try
+to run ASM Edit windowed by pressing <Alt>+<Enter>. If you get a message
+saying 'It is not possible to run this application windowed...' your video
+driver isn't compatible with ASM Edit.
+
+It is recommended to use ASM Edit under plain DOS to develop native assembler
+programs, because buggy assembler code (as often experienced in early stages)
+can lock-up Windows 95.
+
+5. Getting started - Tutorial
+-----------------------------
+
+Before you can work with ASM Edit you have to configure it. Select all external
+programs and enter the working directories as described in ASM Edit's Tutorial.
+You will find it in the help menu or in the help index under 'Tutorial'.
+
+6. The Editor
+-------------
+
+ASM Edit uses our own handmade editor. Depending on your memory size (XMS, EMS
+and disk space) you can edit files largeer than 256 MB. The editor correctly
+handles all files, regardless of line length or number of lines. 
+
+DOS and Unix text files can be loaded and saved, converting them in the
+process. You are even able to edit part of executables, such as COM or EXE
+files. Refer to 'Options - Preferences - Editor' for further info.
+
+7. Using external programs
+--------------------------
+
+OK, we have a nice looking assembler source file. Now what?
+
+ASM Edit is able to run external programs for assembling, linking and
+debugging that source file. The default options set in 'Options - External
+programs' are for use with Borland's Turbo Assembler, Turbo Linker and Turbo
+Debugger. But you can change these options in the mentioned menu to use
+*your* favourite programs.
+
+Errors in your piece of work? No problem!
+
+After assembling an error file is created by the external programs. This file
+(tested with Borland's TASM, Microsoft's MASM and WATCOM's WASM) is read by
+ASM Edit and displayed in a new window. You can choose any of these errors and
+the line containing the error will be automatically shown in an editor window.
+
+8. Tools - Disassembler
+-----------------------
+
+Do you know the ASCII code for '@'? No? There is an ASCII chart in ASM Edit.
+A larger representation of the chosen character is shown along with the
+decimal and hexadecimal number.
+
+No batteries for your little pocket calculator? Use the one in ASM Edit. You
+can set the number format to decimal, hexadecimal or binary and choose the
+range between BYTE, WORD, DWORD or QWORD. The operations of the calculator
+cover not only the numeric ones, you can also shift or rotate the numbers.
+
+Problems with converting numbers? Use ASM Edit's converter. Up to 20 digits
+are shown in hexadecimal, descimal, binary and ASCII format. And: The opcode
+represented through the given numbers will be shown! With this feature you
+can disassemble short code pieces.
+
+Do you have a favourite tool not covered with ASM Edit? Include it via the
+'Options - Tools' menu. A new entry will appear in the 'Tools' menu.
+
+9. The Help System
+------------------
+
+Still confused?
+
+ASM Edit comes with a large help file. All assembler mnemonics up to the new
+Pentium Pro (686), FPU and MMX instructions, EGA/VGA/VESA programming, a hugh
+interrupt list, DOS tables and formats, and much more, are described in the
+help.
+
+To take a short look at it press <Shift>+<F1> to get ASM Edit's help index
+with over 600 entries. Type in a word you want to search for...
+
+Press <Ctrl>+<F1> if you want help on the current word (the one under the
+editor cursor). ASM Edit searches through its index to the nearest letter
+combination. If it matches the given word it will open the help topic. This
+even works in the converter, using the instruction line.
+
+10. Technical details
+---------------------
+
+ASM Edit was written with Borland Pascal 7.0 and Turbo Vision v2.0 at the
+Technical University Dresden, Germany.
+
+It consists now of about 2.4 MByte source code and additional programs/texts.
+The help file's unpacked size is over 1 MByte. ASM Edit uses an DPMI
+host/interface with a handmade swapfile management to provide you as much
+memory as your computer holds for editing. Its ASM Shell realizes a virtual
+video screen to capture all output from external programs.
+
+11. Contact the authors
+-----------------------
+
+snail mail: Olaf Krusche
+            Sportlerweg 7
+            02692 Doberschau
+            Germany
+e-mail:     ok3@irz.inf.tu-dresden.de
+WWW:        www.inf.tu-dresden.de/~ok3 (Homepage)
+            www.inf.tu-dresden.de/~ok3/asmedit.html (ASM Edit)
+                       
+07/08/96  Olaf Krusche, Tilo Elstner

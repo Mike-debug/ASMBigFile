@@ -1,0 +1,165 @@
+This file contains information about installing and/or upgrading ASM Edit.
+
+Please read it carefully before (YES, we mean BEFORE!) you start installing.
+
+ASM Edit
+========
+
+Contents of this document
+=========================
+
+0.  What's new in this version
+1.  Disclaimer, etc.
+2.  Requirements
+3.  What is ASM Edit?
+4.  Installing your first ASM Edit
+5.  Upgrading
+6.  Contact the authors
+
+
+0. What's new in this version
+-----------------------------
+
+After installing see the file WHATS.NEW for a complete revision history.
+
+1.82 (07/08/96):
+
+added:
+- General               : ASM Shell replaces ASM BOX because CPUID  
+
+improved:
+- Window List           : search for file name by typing it
+- Shell                 : reload modified files after return
+- Logfile               : more informations to help us finding bugs
+- Help texts            : some minor corrections, Troubleshooting added
+
+bugfix:
+- Debug|System Info &
+  Options|Preferences   : crash on 386 under OS/2 and early 486 (ever)
+- Options|Load          : changed syntax colors were loaded, but not set
+- Options|Load from INI : crash if loading from v1.8x INI file
+- Search|Replace dialog : options were blank and not setable
+- Colored error line    : was wrong after editing/was not deleted after shell
+- Editor                : Word left,rigth wrong when cursor was after line end
+                        : crash if insert text block after line end
+                        : minor bugs/bad behaviors fixed
+- Calculator            : modi/switches couldn't be changed without mouse
+
+
+1. Disclaimer, etc.
+-------------------
+
+This software is provided "as is" and without warranties as to performance
+of merchantability or any other warranties whether expressed or implied.
+Because of the various hardware and software environments in which this
+program may be used, no warranty of fittness for a particular purpose is
+offered. Use it entirely at your own risk!
+
+You may NOT:
+ - reverse engineer any files
+ - disassemble the executable files
+ - modify any file except:
+   - the files 'NEWCOM.ASM', 'NEWEXE.ASM'
+   - the example batch files
+   - all files in the directory 'TUTOR'
+ - sell, rent or lease any part or the entire package 
+neither for private nor other usage. 
+
+Distribution is allowed, if you distribute the original install version
+including the following files in their original state:
+ - FILEID.DIZ  (      345 bytes)
+ - README.1ST  (    5,408 bytes)
+ - INSTALL.EXE (   42,987 bytes)
+ - ASMEDIT.LIB (1,172,093 bytes)
+
+This includes distribution via BBS, Internet, or as part of an Shareware
+CD-ROM.
+
+This program is shareware. You can test it and check its usefullness for
+you before you actually buy the software. The trial period is 30 days. If
+you continue using the program after this time period you have to register
+it. If you don't register you will use the program as an illegal copy.
+
+After installing see the file ORDER.TXT for ordering a full version.
+
+
+2. Requirements
+---------------
+
+ASM Edit requires:
+- 80386
+- VGA
+- at least DOS 3.3
+- about 500 Kbyte free DOS memory
+- 2048 KByte free disk space to install
+
+Recommended:
+- 80486 DX-33
+- SVGA with VESA support
+- DOS 5.0
+- 1024 KByte free memory (XMS or EMS)
+- additional 4096 KByte free disk space for swap file
+
+
+3. What is ASM Edit?
+--------------------
+
+ASM Edit is a DOS based easy-to-use IDE for all you assembler freaks out
+there. 
+
+
+4. Installing your first ASM Edit
+---------------------------------
+
+If you install ASM Edit for the first time, simply start the INSTALL program
+and follow the directions. After installing, start ASM Edit and select
+'Help - Tutorial'. There you will find assistance in configuring ASM Edit as
+well as topics how to use ASM Edit.
+
+
+5. Upgrading
+------------
+
+* From v1.81, v1.8, v1.7 or v1.6:
+
+Install ASM Edit in a *different* path from your old version.
+
+Start your *old* ASM Edit and convert your desktop file(s):
+
+1: Select 'Options - Load' and load the desired desktop file.
+2: Use 'Options - Save to INI' to save it to a INI file.
+3: If you want to convert more than one desktop file, please load them
+   one after one and save them to different INI files.
+   Note: You have to move the ASMEDIT.INI file by yourself. Use the DOS Shell
+         or File|Open & File|Save for this. 
+4: Copy all the INI files into the path of the new ASM Edit. You can use
+   the 'File - Open' and 'File - Save as' function in ASM Edit for that!
+5: Then start the *new* ASM Edit and load a INI file via 'Options - Load
+   from INI'. Check all options to be correct and save them to a desktop 
+   file. Repeat this for all INI files you created. 
+
+Done. 
+
+Remember: 
+
+The INI files are only for converting older to newer versions. Use desktop
+files to keep all options during your work.
+
+Warning:
+
+In ASM Edit v1.82: Don't load old desktop files (from v1.81, v1.8, v1.7 or
+v1.6) and choose 'Ignore' - This may crash your computer!
+
+
+6. Contact the authors
+-----------------------
+
+snail mail: Olaf Krusche
+            Sportlerweg 7
+            02692 Doberschau
+            Germany
+e-mail:     ok3@irz.inf.tu-dresden.de
+WWW:        www.inf.tu-dresden.de/~ok3 (Homepage)
+            www.inf.tu-dresden.de/~ok3/asmedit.html (ASM Edit)
+
+07/08/96  Olaf Krusche, Tilo Elstner

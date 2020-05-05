@@ -1,0 +1,48 @@
+PRICES.TXT  (ASM Edit)
+
+This file contains the price for the full version of ASM Edit for personal
+use in various currencies. For commercial or governmental use - contact us
+please. 
+
+If you want to pay with a currency that is not covered here, do the following:
+Convert the DM amount (including cheque surcharge if you pay by cheque or
+money order, see below) to your own currency using the most current (today's)
+exchange rate, then add 5%.
+
+This list is based on the exchange rates of 31-March-1995. If the exchange
+rate of your currency has changed noticeably since that date, please contact
+us for up-to-date price information.
+
+IMPORTANT:  These prices are only valid if you pay cash!  Eurocheques are
+            only accepted in DM!  Other checks and money orders should be
+            either DM or $US, plus 15 DM or 10 $US foreign check surcharge.
+
+IMPORTANT:  Please do NOT send coins, because we can not exchange them.
+
+Australia        $AUS    35,-
+Austria          ”S     250,-
+Belgium          bfrs   700,-
+Canada           $CDN    35,-
+Denmark          dkr    140,-
+Finland          Fmk    120,-
+France           FF     120,-
+Germany          DM      30,-
+Italy            Lit  45000,-
+Japan            Yen   2500,-
+Netherlands      hfl     35,-
+Norway           nkr    150,-
+Spain            Ptas  3500,-
+Sweden           skr    200,-
+Switzerland      sfr     30,-
+United Kingdom   UKP     15,-
+USA              $US     20,-
+
+
+THIS LIST IS SUBJECT TO CHANGE WITHOUT NOTICE.  THERE IS NO GUARANTEE THAT
+THE INFORMATION IN THIS LIST IS CORRECT.
+
+(Thanks go to Oliver Fromme, author of QPV - Quick Picture Viewer, for his
+help in this matter.)
+
+
+25/07/96 Olaf Krusche, Tilo Elstner

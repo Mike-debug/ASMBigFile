@@ -1,0 +1,235 @@
+/*--------------------------------------------------------------------------------------------*/
+/*头文件*/
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#include<stdlib.h>
+#include<ctype.h>
+#include<time.h>
+#include <graphics.h>
+#include "bitmap.h"
+
+/*--------------------------------------------------------------------------------------------*/
+/*宏定义*/
+#define	SCRMOD	0x103
+#define	SWIDTH	800L
+#define	SHEIGHT	600L
+#define ImageOffsetI 250
+#define ImageOffsetJ 2
+
+/*--------------------------------------------------------------------------------------------*/
+/*函数声明*/
+void ClearScreen(void);
+/*往图片第j行的待输入数据写入字模信息, 从整幅图像控制看，失踪begini行、beginj列开始显示字符的，写入字符点阵宽度为两个像素点*/
+void DrawCharacterToImage(BYTE* u, int j, char* zm, unsigned int begini, unsigned int beginj);
+
+/*--------------------------------------------------------------------------------------------*/
+/*主函数定义*/
+int main(void)
+{
+/*主程序参数定义*/
+	int					i, j, k;   					/*循环控制变量*/
+	int 				colors, pge;				/*调色板颜色数、页数*/
+	long				adr;						/*地址*/
+	float				x;
+	unsigned int		red;						/*纯红色在调色板中的标号*/
+	BYTE				u[2000], v[256];			/*读取bmp图像的各像素点RGB颜色分量、调色板*/
+	FILE				*fp, *NewBmp, *font;		/*bmp文件指针、添加字符后文件指针、字模文件*/
+	BITMAPFILEHEADER	bf;							/*bmp文件文件头*/
+	BITMAPINFOHEADER	bi;							/*bmp文件图头*/
+	RGBQUAD				rgb[256];					/*调色板*/
+	unsigned char		s[10]="绩满皓小刘",zm[32];	/*添加字符串和字模临时变量*/
+	unsigned int		q, w;						/*区码和位码*/
+	unsigned long int	ofs;						/*汉字字模信息在字体文件中的地址*/
+	unsigned int 		test;						/*检验参数*/
+/*试验参数*/
+	
+	printf("Size of unsigned short int = %d\n",sizeof(unsigned short int));
+	getchar();
+	
+	
+/*打开bmp文件*/
+	if((fp=fopen("k398a.bmp","rb"))==NULL){
+		printf("Cannot open bmp image\n");
+		exit(0);
+	}
+/*新建bmp文件*/
+	if((NewBmp=fopen("new256.bmp","wb"))==NULL){
+		printf("Cannot open bmp image\n");
+		exit(0);
+	}
+/*打开字体文件*/
+	if((font=fopen("Hzk16","rb"))==NULL){
+		printf("Cannot open bmp image\n");
+		exit(0);
+	}
+
+/*读取bmp图形文件头和图头*/
+	fread(&bf, sizeof(bf), 1, fp);
+	fread(&bi, sizeof(bi), 1, fp);
+
+/*打印bmp图像文件基本信息*/
+	printf("Hello, world --> %d\n", sizeof(bf));/*文件头大小*/
+	printf("bfSize --> %lx\n", bf.bfSize);		/*整个文件的大小*/
+	printf("biSize:  %ld\n", bi.biSize);		/*图头的大小*/
+	printf("biWidth: %ld\n", bi.biWidth);		/*位图宽度*/
+	printf("biHeight:%ld\n", bi.biHeight);		/*位图高度*/
+	printf("biPlanes:%d\n",  bi.biPlanes);		/*颜色位面数，总为1*/
+	printf("biBitCount:%d\n", bi.biBitCount);	/*每象数颜色位（1，2，4，8，24）*/ 
+	getchar();/*显示间停顿*/
+
+
+/*--------------------------------------------------------------------------------------------*/
+/*计算调色板颜色数*/
+	colors=1<<bi.biBitCount;
+
+/*读取bmp的调色板*/
+	fread(rgb, sizeof(RGBQUAD), colors, fp);/*读取调色板信息*/
+	
+/*定位红色标号，因为本程序中只用红色字符*/
+	for(i=0;i<colors;++i)
+		if(rgb[i].rgbRed==0XFF&&rgb[i].rgbGreen==0&&rgb[i].rgbBlue==0)
+			break;
+	printf("Red: %X\n",red=i);
+	getchar();/*显示间停顿*/
+
+/*打印bmp图形数段的像素点色素信息，按照显示要求将bmp图像像素点信息经转化后录入或直接录入显示存储中*/
+	for(j=0,i=0; i<colors; i++){
+		/*打印调色板的256种颜色的具体RGB值，每个图像的调色RGB值不一样*/
+		printf("%2X: %2X,%2X,%2X   ", i, rgb[i].rgbRed, rgb[i].rgbGreen, rgb[i].rgbBlue);
+		if(i%5==4)printf("\n");
+		/*256色假彩色显示*/
+		u[j++]=rgb[i].rgbRed>>2;
+		u[j++]=rgb[i].rgbGreen>>2;
+		u[j++]=rgb[i].rgbBlue>>2;
+	}
+	getchar();/*显示间停顿*/
+
+
+/*写入新bmp文件*/
+	rewind(NewBmp);/*调整文件内容指针*/
+	fwrite(&bf,sizeof(bf),1,NewBmp);/*写入文件头*/
+	fwrite(&bi,sizeof(bi),1,NewBmp);/*写入图头*/
+	fwrite(rgb,sizeof(RGBQUAD),256,NewBmp);/*写入调色板*/
+
+/*调整原bmp图像文件内容指针*/
+	rewind(fp);/*调整原图文件指针*/
+	fseek(fp,sizeof(bf),SEEK_SET);/*浏览过文件头*/
+	fseek(fp,sizeof(bi),SEEK_CUR);/*浏览过图头*/
+	fseek(fp,sizeof(RGBQUAD)<<8,SEEK_CUR);/*浏览过调色板*/
+
+	
+	/*写入数据*/
+	for(j=0; j<310; ++j){
+		/*从原图读入一行数据*/
+		fread(u, 1, bi.biWidth, fp);
+		/*向新图写入一行数据*/
+		fwrite(u, 1, bi.biWidth, NewBmp);
+	}
+	test=0; 
+	for(i=0;i<10;i+=2){
+		/*获得汉字字模*/
+		/*计算汉字字模偏移*/
+		ofs=((s[i]-0x0A1)*94+s[i+1]-0x0A1)*1L;/*因为DOS系统宽度限制，32=1*32，分了八次位移*/
+		/*调整字模文件内容指针到指定汉字字模处*/
+		fseek(font, ofs, SEEK_SET);
+		for(k=0;k<31;++k){
+			fseek(font, ofs, SEEK_CUR);
+		}
+
+		fread(zm, 1, 32, font);/*读出字模信息*/
+		printf("s[i]=%X, s[i+1]=%X, ofs=%X\n",s[i],s[i+1],ofs);
+		for(k=0;k<32;++k){
+			printf("%2X  ",zm[k]);
+			if(k%8==7)printf("\n");
+		}
+		
+		/*写入字符*/
+		printf("(%X, %X) \n",0, bi.biHeight/16);
+		for(j=0; j<18; ++j){
+			/*从原图读入一行数据*/
+			fread(u, 1, bi.biWidth, fp);
+			/*写入红色字符*/
+			
+			/*往图片第j行的待输入数据写入字模信息*/
+			if((j>=ImageOffsetJ)&&(j<=(ImageOffsetJ+15)))
+				DrawCharacterToImage(u,j,zm,ImageOffsetI,ImageOffsetJ);
+			
+			++test;
+			/*划红线的试验代码*/
+			/*
+			if(j%40==5||j%40==6)
+				for(k=0;k<bi.biWidth;++k)
+					u[k]=red;
+			*/
+			
+			/*向新图写入一行数据*/
+			fwrite(u, 1, bi.biWidth, NewBmp);
+		}
+		/*关闭新建bmp文件*/
+		if(fclose(NewBmp)){
+			printf("Cannot close new bmp image\n");
+			exit(0);
+		}
+		if((NewBmp=fopen("new256.bmp","ab"))==NULL){
+			printf("Cannot open bmp image\n");
+			exit(0);
+			fseek(NewBmp,0,SEEK_END);/*浏览过调色板*/
+		}
+	}
+	
+	printf("test=%d\n",test);
+	getchar();
+/*关闭bmp文件*/
+	if(fclose(fp)){
+		printf("Cannot close bmp image\n");
+		exit(0);
+	}
+/*关闭新建bmp文件*/
+	if(fclose(NewBmp)){
+		printf("Cannot close new bmp image\n");
+		exit(0);
+	}
+/*关闭字体文件*/
+	if(fclose(font)){
+		printf("Cannot close font file\n");
+		exit(0);
+	}
+	return 0;
+}
+
+
+
+/*--------------------------------------------------------------------------------------------*/
+/*函数定义*/
+
+/*清屏函数*/
+void ClearScreen(void){
+	int i, j;
+	for(i=0;i<40;++i)
+		printf("\n");
+	return;
+}
+/*往图片第j行的待输入数据写入字模信息，写入字符点阵宽度为两个像素点*/
+void DrawCharacterToImage(BYTE* u, int j, char* zm, unsigned int begini, unsigned int beginj){
+/*函数参数定义*/
+	int i, k;/*循环控制变量*/ 
+	unsigned short int temp, cursor;/*存储一行点阵信息的临时变量，双字节；游标，由于读temp的每一位*/
+
+/*写入字符点阵信息*/
+	if(j>=beginj&&j<=beginj+15);/*如果不在字符范围，不做处理*/
+	{
+		/*把汉字一行的点阵信息存储到temp中，由于图像扫描是由下至上的，所以汉字的行从最后开始读入*/
+		temp=zm[30-((j-beginj)<<1)];
+		temp<<=8;
+		temp|=zm[31-((j-beginj)<<1)];
+		/*printf("zm[%2X]=%2X; zm[%2X]=%2X temp=%4X;\n",(j-beginj)<<1,zm[(j-beginj)<<1],((j-beginj)<<1)+1,zm[((j-beginj)<<1)+1],temp);*/
+		/*写入点阵信息到u*/
+		for(cursor=0x8000,i=0;i<16;++i,cursor>>=1){
+			if(cursor&temp)
+				u[i+begini]=0xF9;
+		}
+	}
+	return;
+}
+

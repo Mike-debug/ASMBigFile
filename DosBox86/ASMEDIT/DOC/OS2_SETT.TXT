@@ -1,0 +1,262 @@
+s=DCF
+i=ASM Edit - Preferences
+p=AUDIO_ADAPTER_EMULATION
+t=2
+v=None           
+d=1  ON
+
+p=DOS_AUTOEXEC
+t=3
+v=C:\AUTOEXEC.BAT
+d=1  ON
+
+p=DOS_BACKGROUND_EXECUTION
+t=0
+v=0  OFF
+d=0  OFF
+
+p=DOS_BREAK
+t=0
+v=0  OFF
+d=1  ON
+
+p=DOS_DEVICE
+t=4
+v=
+d=1  ON
+
+p=DOS_FCBS
+t=1
+v=8
+d=0  OFF
+
+p=DOS_FCBS_KEEP
+t=1
+v=4
+d=0  OFF
+
+p=DOS_FILES
+t=1
+v=20
+d=1  ON
+
+p=DOS_HIGH
+t=0
+v=1  ON
+d=0  OFF
+
+p=DOS_LASTDRIVE
+t=3
+v=Z
+d=1  ON
+
+p=DOS_RMSIZE
+t=1
+v=640
+d=1  ON
+
+p=DOS_SHELL
+t=3
+v=C:\OS2\MDOS\COMMAND.COM C:\OS2\MDOS
+d=1  ON
+
+p=DOS_STARTUP_DRIVE
+t=3
+v=
+d=1  ON
+
+p=DOS_UMB
+t=0
+v=1  ON
+d=0  OFF
+
+p=DOS_VERSION
+t=4
+v=DCJSS02.EXE,3,40,255
+v=DFIA0MOD.SYS,3,40,255
+v=DXMA0MOD.SYS,3,40,255
+v=EXCEL.EXE,10,10,4
+v=IBMCACHE.COM,3,40,255
+v=IBMCACHE.SYS,3,40,255
+v=ISAM.EXE,3,40,255
+v=ISAM2.EXE,3,40,255
+v=ISQL.EXE,3,40,255
+v=MSD.EXE,5,00,255
+v=NET3.COM,3,40,255
+v=NETX.COM,4,00,255
+v=NETX.EXE,5,00,255
+v=PSCPG.COM,3,40,255
+v=SAF.EXE,3,40,255
+v=WIN200.BIN,10,10,4
+d=1  ON
+
+p=DPMI_DOS_API
+t=2
+v=ENABLED
+d=0  OFF
+
+p=DPMI_MEMORY_LIMIT
+t=1
+v=8
+d=0  OFF
+
+p=DPMI_NETWORK_BUFF_SIZE
+t=1
+v=8
+d=1  ON
+
+p=EMS_FRAME_LOCATION
+t=2
+v=NONE
+d=0  OFF
+
+p=EMS_HIGH_OS_MAP_REGION
+t=1
+v=0
+d=1  ON
+
+p=EMS_LOW_OS_MAP_REGION
+t=1
+v=384
+d=1  ON
+
+p=EMS_MEMORY_LIMIT
+t=1
+v=0
+d=0  OFF
+
+p=HW_NOSOUND
+t=0
+v=0  OFF
+d=1  ON
+
+p=HW_ROM_TO_RAM
+t=0
+v=0  OFF
+d=1  ON
+
+p=HW_TIMER
+t=0
+v=0  OFF
+d=1  ON
+
+p=IDLE_SECONDS
+t=1
+v=2
+d=0  OFF
+
+p=IDLE_SENSITIVITY
+t=1
+v=75
+d=1  ON
+
+p=INT_DURING_IO
+t=0
+v=0  OFF
+d=0  OFF
+
+p=KBD_ALTHOME_BYPASS
+t=0
+v=0  OFF
+d=1  ON
+
+p=KBD_BUFFER_EXTEND
+t=0
+v=1  ON
+d=1  ON
+
+p=KBD_CTRL_BYPASS
+t=2
+v=NONE
+d=1  ON
+
+p=KBD_RATE_LOCK
+t=0
+v=1  ON
+d=0  OFF
+
+p=MEM_EXCLUDE_REGIONS
+t=3
+v=
+d=1  ON
+
+p=MEM_INCLUDE_REGIONS
+t=3
+v=
+d=1  ON
+
+p=MOUSE_EXCLUSIVE_ACCESS
+t=0
+v=0  OFF
+d=1  ON
+
+p=PRINT_SEPARATE_OUTPUT
+t=0
+v=1  ON
+d=1  ON
+
+p=PRINT_TIMEOUT
+t=1
+v=15
+d=1  ON
+
+p=SESSION_PRIORITY
+t=1
+v=1
+d=1  ON
+
+p=VIDEO_8514A_XGA_IOTRAP
+t=0
+v=0  OFF
+d=0  OFF
+
+p=VIDEO_FASTPASTE
+t=0
+v=1  ON
+d=0  OFF
+
+p=VIDEO_MODE_RESTRICTION
+t=2
+v=NONE        
+d=1  ON
+
+p=VIDEO_ONDEMAND_MEMORY
+t=0
+v=1  ON
+d=1  ON
+
+p=VIDEO_RETRACE_EMULATION
+t=0
+v=0  OFF
+d=0  OFF
+
+p=VIDEO_ROM_EMULATION
+t=0
+v=1  ON
+d=1  ON
+
+p=VIDEO_SWITCH_NOTIFICATION
+t=0
+v=0  OFF
+d=1  ON
+
+p=VIDEO_WINDOW_REFRESH
+t=1
+v=1
+d=1  ON
+
+p=XMS_HANDLES
+t=1
+v=16
+d=0  OFF
+
+p=XMS_MEMORY_LIMIT
+t=1
+v=4096
+d=0  OFF
+
+p=XMS_MINIMUM_HMA
+t=1
+v=63
+d=0  OFF
+

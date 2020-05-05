@@ -1,0 +1,12 @@
+asmedit.exe The main program ASM Edit
+ae.bat A batch file to start ASM Edit
+external.bat A batch file external programs
+asmedit.hlp The help file
+newcom.asm Dummy COM file
+newexe.asm Dummy EXE file
+descript.ion 4DOS description file
+asmshell.exe ASM Edit's Loader
+dpmi16bi.ovl 16-bit DPMI host
+rtm.exe RTM loader
+aeo18_a.ico An OS/2 icon file
+aeo18_b.ico Another icon for OS/2

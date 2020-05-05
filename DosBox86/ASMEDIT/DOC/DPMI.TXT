@@ -1,0 +1,118 @@
+DPMI usage and problems related to that
+=======================================
+
+This file describes the programs RTM.EXE and DPMI16BI.OVL. You can copy and
+use these files under the same terms as the software licence by Borland Pascal.
+
+Contents
+========
+
+1. Running a DOS protected mode program
+2. DPMI host DPMI16BI.OVL
+3. Control memory via DPMI loader
+4. How to use 32bit DPMI if 16 bit fails
+5. DPMI in a Windows DOS box
+6. DPMI in OS/2 DOS box
+
+
+1. Running a DOS protected mode program
+---------------------------------------
+
+If you run a protected mode (PM) program be sure to keep the the files
+DPMI16BI.OVL (the DPMI host), RTM.EXE (the DPMI loader) and all application
+DLLs in one of the following places:
+
+- the current directory
+- the same directory as the application
+- in the search PATH.
+
+
+2. DPMI host DPMI16BI.OVL
+-------------------------
+
+Per default the DPMI host will allocate all available extended memory.
+To aviod this you can set an environment variable to give an upper boundary.
+You can write the following line to your AUTOEXEC.BAT:
+
+  SET DPMIMEM=MAXMEMxxxx
+
+where xxxx is the amount of memory in KByte.
+
+If you have for instance 4 MByte Memory installed and you will give the DPMI
+host only 2 MByte of it, define the environment as follows:
+
+  SET DPMIMEM=MAXMEM2048
+
+
+These lines are already in AE.BAT. Please adjust them, if you use this batch
+file to start ASM Edit.
+
+
+3. Control memory via DPMI loader
+---------------------------------
+
+The DPMI loader tries to give you the maximum amount of conventional memory
+before running an application. RTM will move memory blocks to extended
+memory but doesn't free them again. If you want to use other PM programs
+you can set the environment variable RTM.
+
+   Option          Description
+   -----------------------------------------------------------------------
+   EXTLEAVExxxx    Leave xxxx Kbyte extended memory. Default is 640 kByte.
+
+   EXTMAXxxxx      xxxx KByte extended memory will be allocated. Default
+                   is 4 GByte.
+
+   EXTMINxxxx      If there are less than xxxx KByte memory after
+                   consideration of EXTMAX and EXTLEAVE the program will
+                   be terminated with 'Out of memory". Default is 0.
+
+   REALLEAVEnnnn   Leave nnnn paragraphs DOS memory. Default is 4096
+                   paragraphs, which is 64 KByte.
+
+   REALMAXnnnn     nnnn paragraphs will be allocated. Default is 65535,
+                   which is 1 MByte.
+
+   REALMINnnnn     If there are less than nnnn KByte memory after
+                   consideration of REALMAX and REALLEAVE the program will
+                   be terminated with 'Out of memory". Default is 0.
+
+With the following line RTM allocates a maximum amount of 2 MByte extended
+memory and leaves 128 KByte DOS memory:
+
+  SET RTM=EXTMAX2048 REALLEAVE8192
+
+
+4. How to use 32bit DPMI if 16 bit fails
+----------------------------------------
+
+If you experience problems with the 16 bit DPMI host provided by ASM Edit
+try to use another DPMI host.
+
+- Use Quarterdecks QPDMI host. 
+  (refer to your manual of Quarterdeck how to include the DPMI device driver
+  in your config.sys)
+- Use 32RTM.EXE and DPMI32VM.OVL (e.g. from Borland C++).
+- use the DPMIRES program shipped with many Borland tools.
+
+Note that you have to set the environment variables DPMI32 instead of 
+DPMIMEM to adjust your DPMI memory.
+
+Example:  SET DPMI32=MAXMEM4096
+
+
+5. DPMI in a Windows DOS box
+----------------------------
+
+Make sure that you load the DPMI host AFTER starting the DOS box, but BEFORE
+starting ASM Edit. Please use a PIF file.
+
+
+6. DPMI in a OS/2 DOS box
+-------------------------
+
+Simple enable the settings for DPMI and select a proper amount of memory (e.g. 
+4-8 MByte). That's all.
+
+
+07/08/96  Olaf Krusche, Tilo Elstner

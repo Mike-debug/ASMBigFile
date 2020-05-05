@@ -1,0 +1,1054 @@
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-1
+
+
+       1				;************************************»ã
+					±à×÷ÒµµÚÈý´Î***************************
+					***************
+       2				;*ÐÕÃû£ºÎºÒ»Ãù
+       3				;*Ñ§ºÅ£º3150100565
+       4				;*×¨Òµ£º¼ÆËã»ú¿ÆÑ§Óë¼¼Êõ
+       5				;**************************************
+					***************************************
+					***************
+       6				.386
+       7 0000				data segment use16
+       8 0000  64 00				filename db 100,?,100 dup(0)
+       9       0064[			
+      10	   00			
+      11			 ]	
+      12				
+      13					;filename db 'abc.txt',0
+      14					;buf db 	128,?,128 dup(?
+					)
+      15 0066  0100[				buf db 	256 dup(?)
+      16	   ??			
+      17			 ]	
+      18				
+      19					;buf db 	"fcwk51@#xx!~ x
+					x ", 0Dh, 0Ah, '$'
+      20 0166  0000				handle dw 0
+      21 0168  00000000				filesize dd ?
+      22 016C  50 6C 65 61 73 65		hint1 db "Please input filename
+					:", 0Dh, 0Ah, '$'
+      23       20 69 6E 70 75 74	
+      24       20 66 69 6C 65 6E	
+      25       61 6D 65 3A 0D 0A	
+      26       24			
+      27 0185  43 61 6E 6E 6F 74		hint2 db "Cannot open file!", 0
+					Dh, 0Ah, '$'
+      28       20 6F 70 65 6E 20	
+      29       66 69 6C 65 21 0D	
+      30       0A 24			
+      31 0199  30 30 30 30 30 30		s db "00000000: xx xx xx xx|xx 
+					xx xx xx|xx xx xx xx|xx xx xx xx  .....
+					...........", 0Dh, 0Ah, '$'
+      32       30 30 3A 20 78 78	
+      33       20 78 78 20 78 78	
+      34       20 78 78 7C 78 78	
+      35       20 78 78 20 78 78	
+      36       20 78 78 7C 78 78	
+      37       20 78 78 20 78 78	
+      38       20 78 78 7C 78 78	
+      39       20 78 78 20 78 78	
+      40       20 78 78 20 20 2E	
+      41       2E 2E 2E 2E 2E 2E	
+      42       2E 2E 2E 2E 2E 2E	
+      43       2E 2E 2E 0D 0A 24	
+      44 01E7  30 30 30 30 30 30		pattern db "00000000:          
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-2
+
+
+					  |           |           |            
+					                 ", 0Dh, 0Ah, '$'
+      45       30 30 3A 20 20 20	
+      46       20 20 20 20 20 20	
+      47       20 20 20 7C 20 20	
+      48       20 20 20 20 20 20	
+      49       20 20 20 7C 20 20	
+      50       20 20 20 20 20 20	
+      51       20 20 20 7C 20 20	
+      52       20 20 20 20 20 20	
+      53       20 20 20 20 20 20	
+      54       20 20 20 20 20 20	
+      55       20 20 20 20 20 20	
+      56       20 20 20 0D 0A 24	
+      57 0235  30 31 32 33 34 35		t db "0123456789ABCDEF"
+      58       36 37 38 39 41 42	
+      59       43 44 45 46		
+      60 0245  02				row db 2		
+								;µÚ¼¸ÐÐ
+      61 0246  10				bytes_on_row db 10h	
+								;Ã¿ÐÐ¶Á¶àÉÙ×Ö½Ú
+      62 0247  00000000				index dd 0h		
+							;³õÊ¼ÐÐµÄÆ«ÒÆµØÖ·
+      63 024B  0100				bytes_in_buf dw 100h	
+								;bufÖÐÓÐ¶àÉÙ×Ö½
+					Ú
+      64 024D  00000000				file_size dd 0h
+      65 0251				data ends
+      66 0000				stack1 segment use16
+      67 0000  03E8[				dd 1000 dup(0)
+      68	   00000000		
+      69			 ]	
+      70				
+      71 0FA0				stack1 ends
+      72 0000				code segment use16
+      73				assume cs:code, ss:stack1, ds:data
+      74 0000				main:
+      75 0000  B8 ---- R			mov ax, data
+      76 0003  8E D8				mov ds, ax
+      77					
+      78 0005  BA 016C R			mov dx, offset hint1
+      79 0008  E8 0095 R			call near ptr outputchararray
+								;ÌáÊ¾ÊäÈëÎÄ¼þÃû
+      80				
+      81 000B  B4 0A				mov ah, 0ah		
+								;ÊäÈëÎÄ¼þÃû
+      82 000D  BA 0000 R			mov dx, offset filename
+      83 0010  CD 21				int 21h
+      84					;mov filename[9],0	
+								;Ö®Ç°²âÊÔµÄÊ±ºò
+					ÓÃ¹ý¸ø¶¨³¤¶ÈµÄÎÄ¼þÃû
+      85 0012  E8 01E3 R			call near ptr endfile
+      86				
+      87				
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-3
+
+
+      88				
+      89				
+      90 0015  B4 3D				mov ah, 3dh		
+								;´ò¿ªÎÄ¼þ
+      91 0017  B0 00				mov al, 0
+      92 0019  BA 0002 R			mov dx, offset filename[2]
+      93				;	add dx, 0
+      94 001C  CD 21				int 21h
+      95				
+      96 001E  0F 82 008B R			jc error		
+								;ÅÐ¶Ï´ò¿ª³É¹¦Óë
+					·ñ
+      97 0022  A3 0166 R			mov handle, ax		
+								;±£´æ¾ä±ú
+      98				
+      99					;xor bx, bx		
+								;°ÑÎÄ¼þÃûºó¼Ó0
+     100					;mov bl, filename[1]
+     101					;mov si, bx		
+								
+     102					;inc si
+     103					;inc si
+     104					;mov filename[si], 0
+     105				
+     106 0025  B4 42				mov ah, 42h		
+								;¶ÁÎÄ¼þ´óÐ¡
+     107 0027  B0 02				mov al, 2; ¶ÔÓ¦lseek()µÄµÚ3¸ö²Î
+					Êý,
+     108						; ±íÊ¾ÒÔEOFÎª²ÎÕÕµã½øÐÐ
+					ÒÆ¶¯
+     109 0029  8B 1E 0166 R			mov bx, handle
+     110 002D  B9 0000				mov cx, 0; \ ¶ÔÓ¦lseek()µÄµÚ2¸ö
+					²ÎÊý
+     111 0030  BA 0000				mov dx, 0; /
+     112 0033  CD 21				int 21h
+     113 0035  88 16 024F R			mov byte ptr file_size[2], dl
+     114 0039  88 36 0250 R			mov byte ptr file_size[3], dh
+     115 003D  A2 024D R			mov byte ptr file_size[0], al
+     116 0040  88 26 024E R			mov byte ptr file_size[1], ah
+     117				
+     118				
+     119 0044				display_by_control:
+     120 0044  E8 0285 R			call near ptr bytes_in_buf_calc
+					ulating
+     121 0047  B4 42				mov ah, 42h
+     122 0049  B0 00				mov al, 0; ¶ÔÓ¦lseek()µÄµÚ3¸ö²Î
+					Êý,
+     123						; ±íÊ¾ÒÔÆ«ÒÆ0×÷Îª²ÎÕÕµã
+					½øÐÐÒÆ¶¯
+     124 004B  8B 1E 0166 R			mov bx, handle
+     125 004F  8B 0E 0249 R			mov cx, word ptr index[2]; \cx:
+					dxºÏÒ»Æð¹¹³É
+     126 0053  8B 16 0247 R			mov dx, word ptr index[0]; /32Î
+					»Öµ=offset
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-4
+
+
+     127 0057  CD 21				int 21h
+     128				;	;mov word ptr file_size[2], dx 
+					 ;µÈ¼ÛÒÔÉÏËÄ¾ä»°
+     129				;	;mov word ptr file_size[0], ax
+     130				;
+     131				;	mov dl, file_size[3]
+     132				;	add dl, 30h
+     133				;	call near ptr Tester
+     134				;
+     135				;	mov dl, file_size[2]
+     136				;	add dl, 30h
+     137				;	call near ptr Tester
+     138				;
+     139				;	mov dl, file_size[1]
+     140				;	add dl, 30h
+     141				;	call near ptr Tester
+     142				;
+     143				;	mov dl, file_size[0]
+     144				;	add dl, 30h
+     145				;	call near ptr Tester
+     146				
+     147				
+     148 0059  B4 3F				mov ah, 3fh		
+								;¿ªÊ¼¶ÁÈëÎÄ¼þ£¬
+					×î´ó1024B
+     149 005B  BA 0066 R			mov dx, offset buf
+     150 005E  8B 0E 024B R			mov cx, bytes_in_buf
+     151 0062  8B 1E 0166 R			mov bx, handle
+     152 0066  CD 21				int 21h
+     153				
+     154 0068  8B 1E 0166 R			mov bx, handle
+     155 006C  B4 3E				mov ah, 3eh
+     156 006E  CD 21				int 21h
+     157 0070  0F 82 008B R			jc error
+     158				
+     159					;mov si, 9	;ÈÃ¶Áµ½µÄ×Ö·û´®
+					ÓÐ½áÊø±êÖ¾	;\
+     160					;mov buf[si], '$'	
+								; \	
+     161					;mov dx, offset buf	
+								; /Õâ¶Î´úÂëÔøÓÃ
+					ÓÚ²âÊÔbufÖÐµÄÄÚÈÝ
+     162					;call near ptr outputchararray
+								;/
+     163				
+     164					;ÒÔÏÂÊÇÄÚ´æ½çÃæÏÔÊ¾
+     165 0074  E8 01D9 R			call near ptr show_this_page
+     166 0077  B4 00				mov ah,0
+     167 0079  CD 16				int 16h
+     168					
+     169 007B  80 FC 01				cmp ah, 1
+     170 007E  0F 84 0087 R			je ending
+     171				
+     172 0082  E8 02B3 R			call near ptr alternation
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-5
+
+
+     173 0085  EB BD				jmp display_by_control
+     174					;mov bx, 'AB'		
+								;\
+     175					;shl ebx, 16		
+								; |ÔÚindexÊ¹ÓÃÖ
+					®Ç°£¬Õâ¶Î´úÂëÓÃÀ´²Ù×÷ebx
+     176					;mov bx, 0fefeh		
+								;/
+     177					;mov ebx, index
+     178					;mov si, 10
+     179					;call near ptr coordinate_calcu
+					lating
+     180					;mov si, 0h		
+								 ; \  
+     181					;mov cx, 75		
+								 ;  /Õâ¶Î´úÂëÓÃ
+					ÓÚ²âÊÔº¯Êýcoordinate_calculatingÊÇ·ñÕýÈ
+					·
+     182					;call near ptr output_s	
+								 ;/
+     183				
+     184					;call near ptr sub_show_this_ro
+					w
+     185				
+     186					;mov bl, 254		
+								;\
+     187					;mov bh, 254		
+								 ;\
+     188					;shl ebx, 16		
+								  ;\
+     189					;mov bl, 254		
+								   ;\
+     190					;mov bh, 254		
+								    ;\
+     191					;mov si, 0h		
+								    ;/Õâ¶Î´úÂëÓ
+					ÃÓÚ²âÊÔº¯Êýconvert8bit_to_hexºÍconvert3
+					2bit_to_hexÊÇ·ñÕýÈ·
+     192					;call near ptr convert32bit_to_
+					hex		   ;/
+     193					;			
+								  ;/	
+     194					;mov cx, 75h		
+								 ;/
+     195					;call near ptr output_s	
+								;/
+     196				
+     197 0087				ending:
+     198 0087  B4 4C				mov ah, 4ch
+     199 0089  CD 21				int 21h
+     200 008B				error:
+     201 008B  BA 0185 R			mov dx, offset hint2
+     202 008E  E8 0095 R			call near ptr outputchararray
+     203 0091  B4 4C				mov ah, 4ch
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-6
+
+
+     204 0093  CD 21				int 21h
+     205				;--------------------------------------
+					---------------------------------------
+					--------------
+     206 0095				outputchararray proc near
+     207 0095  50				push ax
+     208 0096  B4 09				mov ah, 09h
+     209 0098  CD 21				int 21h
+     210 009A  58				pop ax
+     211 009B  C3				retn
+     212 009C				outputchararray endp
+     213				;--------------------------------------
+					---------------------------------------
+					--------------
+     214 009C				convert8bit_to_hex proc near	
+								;°Ñ´æÔÚblÖÐµÄÊý
+					×ª³É16½øÖÆ´æÈës[bp]ÖÐ
+     215 009C  50				push ax
+     216 009D  51				push cx
+     217 009E  56				push si
+     218 009F  53				push bx
+     219				
+     220 00A0  33 C9				xor cx, cx
+     221 00A2  33 C0				xor ax, ax
+     222				
+     223 00A4  8A C3				mov al, bl
+     224 00A6  24 F0				and al,0f0h
+     225 00A8  C0 E8 04				shr al, 4		
+								;alÖÐ´æ¸ß4Î»
+     226 00AB  8B F0				mov si, ax
+     227 00AD  8A AC 0235 R			mov ch, t[si]		
+								;chÖÐ´æ·Å¸ß4Î»
+     228				
+     229 00B1  33 C0				xor ax, ax
+     230				
+     231 00B3  8A C3				mov al, bl
+     232 00B5  24 0F				and al,0fh		
+								;alÖÐ´æµÍ4Î»
+     233 00B7  8B F0				mov si, ax
+     234 00B9  8A 8C 0235 R			mov cl, t[si]		
+								;clÖÐÊÇµÍ4Î»
+     235				
+     236 00BD  5B				pop bx
+     237 00BE  5E				pop si
+     238 00BF  88 AC 0199 R			mov s[si], ch
+     239 00C3  46				inc si
+     240 00C4  88 8C 0199 R			mov s[si], cl
+     241				
+     242 00C8  4E				dec si
+     243 00C9  59				pop cx
+     244 00CA  58				pop ax
+     245 00CB  C3				retn
+     246				
+     247 00CC				convert8bit_to_hex endp
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-7
+
+
+     248				;--------------------------------------
+					---------------------------------------
+					--------------
+     249 00CC				Tester proc near		
+								;Testerº¯ÊýÔ­À´
+					ÊÇÎÒÓÃÀ´²âÊÔdlºÍÆäËû¼Ä´æÆ÷ÖÐµÄÖµµÄ£¬ÒòÎ
+					ªÒ²¿ÉÒÔÓÃÀ´
+     250 00CC  50				push ax			
+								;Êä³ö×Ö·û£¬ËùÒÔ
+					Ò²±£ÁôÏÂÀ´ÁË
+     251 00CD  33 C0				xor ax, ax
+     252 00CF  B4 02				mov ah, 02h
+     253 00D1  CD 21				int 21h
+     254 00D3  58				pop ax
+     255 00D4  C3				retn
+     256 00D5				Tester endp
+     257				;--------------------------------------
+					---------------------------------------
+					--------------
+     258 00D5				convert32bit_to_hex proc near	
+								;°ÑebxÖÐµÄ32Î»Ê
+					ý×Ö×ª³ÉÊ®Áù½øÖÆ
+     259 00D5  51				push cx
+     260 00D6  56				push si
+     261 00D7  66| 53				push ebx
+     262				
+     263 00D9  33 C9				xor cx, cx
+     264 00DB  B9 0004				mov cx, 4
+     265 00DE				convert:
+     266 00DE  66| C1 C3 08			rol ebx, 8h
+     267 00E2  E8 009C R			call near ptr convert8bit_to_he
+					x
+     268 00E5  46				inc si
+     269 00E6  46				inc si
+     270 00E7  E2 F5				loop convert
+     271				
+     272 00E9  66| 5B				pop ebx
+     273 00EB  5E				pop si
+     274 00EC  59				pop cx
+     275 00ED  C3				retn
+     276 00EE				convert32bit_to_hex endp
+     277				;--------------------------------------
+					---------------------------------------
+					--------------
+     278 00EE				output_s proc near		
+								;¸Ãº¯ÊýÓÃÓÚ·ÇÏÔ
+					´æÊä³ö×Ö·û´®s
+     279 00EE  56				push si
+     280 00EF  51				push cx
+     281 00F0  52				push dx
+     282 00F1  50				push ax
+     283				
+     284 00F2  33 C9				xor cx, cx
+     285 00F4  B9 004B				mov cx, 75
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-8
+
+
+     286 00F7  BE 0000				mov si, 0
+     287 00FA				output:
+     288 00FA  8A 94 0199 R			mov dl, s[si]
+     289 00FE  E8 00CC R			call near ptr Tester
+     290 0101  46				inc si
+     291 0102  83 FE 4B				cmp si, 75
+     292 0105  76 F3				jna output
+     293				
+     294 0107  58				pop ax
+     295 0108  5A				pop dx
+     296 0109  59				pop cx
+     297 010A  5E				pop si
+     298 010B  C3				retn
+     299 010C				output_s endp
+     300				;--------------------------------------
+					---------------------------------------
+					--------------
+     301 010C				cleanscreen proc near
+     302 010C  50				push ax
+     303 010D  53				push bx
+     304 010E  51				push cx
+     305 010F  52				push dx
+     306				
+     307 0110  B8 B800				mov ax,0B800h
+     308 0113  8E C0				mov es,ax		
+								;ÏÔ´æµØÖ·
+     309 0115  B4 07				mov ah,7		
+								;ÏòÏÂ¾íÆÁ
+     310 0117  B0 00				mov al,0		
+								;ÇåÆÁ
+     311 0119  B7 00				mov bh,0		
+								;ÇåÆÁºó¿Õ°×²¿·Ö
+					ÊôÐÔÎªºÚÉ«
+     312 011B  B5 00				mov ch,0		
+								;ÇåÆÁ×óÉÏ½ÇÐÐ×ø
+					±ê
+     313 011D  B1 00				mov cl,0		
+								;ÇåÆÁ×óÉÏ½ÇÁÐ×ø
+					±ê
+     314 011F  B6 0F				mov dh,15		
+								;ÇåÆÁÓÒÏÂ½ÇÐÐ×ø
+					±ê
+     315 0121  B2 4A				mov dl,74		
+								;ÇåÆÁÓÒÏÂ½ÇÁÐ×ø
+					±ê
+     316 0123  CD 10				int 10h
+     317					
+     318 0125  5A				pop dx
+     319 0126  59				pop cx
+     320 0127  5B				pop bx
+     321 0128  58				pop ax
+     322 0129  C3				retn
+     323 012A				cleanscreen endp
+     324				;--------------------------------------
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-9
+
+
+					---------------------------------------
+					--------------
+     325 012A				coordinate_calculating proc near
+								;Æ«ÒÆµØÖ·¼ÆËã
+     326 012A  50				push ax
+     327 012B  53				push bx
+     328 012C  51				push cx
+     329 012D  52				push dx
+     330 012E  56				push si
+     331				
+     332 012F  56				push si
+     333 0130  33 C9				xor cx, cx
+     334 0132  33 F6				xor si, si
+     335 0134  33 D2				xor dx, dx
+     336 0136  B9 004B				mov cx, 75
+     337 0139				strcpy_s_pattern:
+     338 0139  8A 94 01E7 R			mov dl,pattern[si]
+     339 013D  88 94 0199 R			mov s[si],dl
+     340 0141  46				inc si
+     341 0142  E2 F5				loop strcpy_s_pattern
+     342 0144  5E				pop si
+     343					
+     344 0145  56				push si
+     345 0146  BE 0000				mov si, 0h
+     346 0149  E8 00D5 R			call near ptr convert32bit_to_h
+					ex
+     347 014C  5E				pop si
+     348				
+     349					;mov si, 0h		
+								 ; \  
+     350					;mov cx, 75		
+								 ;  /Õâ¶Î´úÂëÓÃ
+					ÓÚ²âÊÔº¯Êýcoordinate_calculatingÊÇ·ñÕýÈ
+					·
+     351					;call near ptr output_s	
+								 ;/
+     352				
+     353 014D  5E				pop si
+     354 014E  5A				pop dx
+     355 014F  59				pop cx
+     356 0150  5B				pop bx
+     357 0151  58				pop ax
+     358 0152  C3				retn
+     359 0153				coordinate_calculating endp
+     360				;--------------------------------------
+					---------------------------------------
+					--------------
+     361 0153				sub_show_this_row  proc near	
+									;ebxÖÐ·
+					ÅµÄÊÇÆ«ÒÆµØÖ·offset£¬bufÊÇÄÚÈÝ;bytes_on
+					_rowÊÇÃ¿ÐÐ¶àÉÙ×Ö½Ú
+     362 0153  50				push ax
+     363 0154  57				push di
+     364 0155  51				push cx
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-10
+
+
+     365 0156  52				push dx
+     366 0157  53				push bx
+     367 0158  56				push si
+     368 0159  55				push bp
+     369				
+     370 015A  33 DB				xor bx, bx
+     371 015C  33 D2				xor dx, dx
+     372 015E  33 C9				xor cx, cx
+     373 0160  33 FF				xor di, di
+     374 0162  8A 0E 0246 R			mov cl, bytes_on_row	
+								;ÕâÀïÔøÓÃÁ¢¼´Êý
+					10h´úÌæbytes_on_row£¬Ö®ºóÒª¸Ä
+     375 0166  33 F6				xor si, si
+     376 0168  BE 000A				mov si, 10
+     377 016B  BF 003B				mov di, 59
+     378 016E				move_buf_to_s:
+     379 016E  3E: 8A 9E 0066 R			mov bl, buf[bp]
+     380 0173  88 9D 0199 R			mov s[di], bl
+     381					;mov dl, bl		
+								;\
+     382					;call near ptr Tester	
+								;/ ¸Ã¶Îº¯ÊýÓÃÓÚ
+					²âÊÔblÈ·Êµ´«µÝÁËbufÖÐµÄ×Ö·û
+     383 0177  E8 009C R			call near ptr convert8bit_to_he
+					x			
+     384 017A  45				inc bp
+     385 017B  47				inc di
+     386 017C  83 C6 03				add si, 3h
+     387 017F  E2 ED				loop move_buf_to_s
+     388				
+     389				
+     390 0181  33 C9				xor cx, cx		
+								;´Ó´ËÊ±¿ªÊ¼Êä³ö
+					Ò»ÐÐ×Ö·û
+     391 0183  B9 004B				mov cx, 75
+     392 0186  33 F6				xor si, si
+     393 0188  E8 01C5 R			call near ptr coordinate
+								;¼ÆËãcoordinate
+					¼´Êä³ö×ø±ê
+     394 018B				showaline:
+     395 018B  E8 01AA R			call near ptr color	
+								;ÕâÀïÐèÒªÒ»¸öÅÐ
+					¶ÏahÎª07h»òÕß0fhµÄº¯Êý
+     396 018E  8A 84 0199 R			mov al, s[si]
+     397 0192  E8 01A3 R			call near ptr print
+     398 0195  83 C7 02				add di, 2
+     399 0198  46				inc si
+     400 0199  E2 F0				loop showaline
+     401				
+     402					;mov ah,0
+     403					;int 16h
+     404 019B  5D				pop bp
+     405 019C  5E				pop si
+     406 019D  5B				pop bx
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-11
+
+
+     407 019E  5A				pop dx
+     408 019F  59				pop cx
+     409 01A0  5F				pop di
+     410 01A1  58				pop ax
+     411 01A2  C3				retn    
+     412 01A3				sub_show_this_row endp
+     413				;--------------------------------------
+					---------------------------------------
+					--------------
+     414 01A3				print proc near			
+								;´Ëº¯ÊýÓÃÓÚsub_
+					show_this_rowº¯ÊýÍ¶Ó³µ½ÆÁÄ»
+     415 01A3  51				push cx
+     416 01A4  57				push di
+     417					
+     418 01A5  FC				cld
+     419 01A6  AB				stosw
+     420				
+     421 01A7  5F				pop di
+     422 01A8  59				pop cx
+     423 01A9  C3				retn
+     424 01AA				print endp
+     425				;--------------------------------------
+					---------------------------------------
+					--------------
+     426 01AA				color proc near			
+								;¸Ãº¯ÊýÓÃÓÚÅÐ¶Ï
+					Êä³ö×Ö·ûµÄÑÕÉ«ºÍÁÁ¶È
+     427 01AA  83 FE 3B				cmp si, 59
+     428 01AD  0F 82 01B4 R			jb ifor
+     429 01B1  B4 07				mov ah, 07h
+     430 01B3				return:
+     431 01B3  C3				retn
+     432 01B4				ifor:
+     433 01B4  80 BC 0199 R 7C			cmp s[si], '|'
+     434 01B9  0F 84 01C1 R			je lit
+     435 01BD  B4 07				mov ah, 07h
+     436 01BF  EB F2				jmp return
+     437 01C1				lit:
+     438 01C1  B4 0F				mov ah, 0fh
+     439 01C3  EB EE				jmp return
+     440 01C5				color endp
+     441				;--------------------------------------
+					---------------------------------------
+					--------------
+     442 01C5				coordinate proc near		
+								;¸ù¾ÝrowÖµ£¬¼ÆË
+					ãbi×ø±ê£¬ÊÓÆµ×ø±ê
+     443 01C5  50				push ax
+     444 01C6  53				push bx
+     445					
+     446 01C7  33 C0				xor ax, ax
+     447 01C9  33 DB				xor bx, bx
+     448 01CB  A0 0245 R			mov al, row
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-12
+
+
+     449 01CE  FE C8				dec al
+     450 01D0  B3 A0				mov bl, 160
+     451 01D2  F6 E3				mul bl
+     452 01D4  8B F8				mov di, ax
+     453				
+     454 01D6  5A				pop dx
+     455 01D7  58				pop ax
+     456 01D8  C3				retn
+     457 01D9				coordinate endp
+     458				;--------------------------------------
+					---------------------------------------
+					--------------
+     459 01D9				show_this_page proc near
+     460				;	mov ebx, index
+     461 01D9  E8 010C R			call near ptr cleanscreen
+								;ÇåÆÁº¯Êý£¬ºÍcÓ
+					ïÑÔÎÄ¼þÃèÊöÓÐËù²»Í¬£¬µ«¶¼ÓÐÇåÆÁ¹¦ÄÜ
+     462 01DC  E8 01F8 R			call near ptr row_calculating
+								;¼ÆËãµ±Ç°Ò³ÐèÒª
+					ÏÔÊ¾¶àÉÙÐÐ
+     463					
+     464				
+     465 01DF  E8 020E R			call near ptr printrows	
+								;ÏÔÊ¾Ò»ÐÐ
+     466 01E2  C3				retn
+     467 01E3				show_this_page endp
+     468				;--------------------------------------
+					---------------------------------------
+					--------------
+     469 01E3				endfile proc near		
+								;¸Ãº¯ÊýÓÃÓÚÔÚÎÄ
+					¼þÃûºó¼Ó0£¬½áÊøÎÄ¼þÃû
+     470 01E3  56				push si
+     471 01E4  52				push dx
+     472					
+     473 01E5  BE 0002				mov si, 2
+     474 01E8				compare:
+     475 01E8  46				inc si
+     476 01E9  80 BC 0000 R 1F			cmp filename[si], 1fh	
+								;¸ù¾ÝascllÂë±í£
+					¬ËùÓÐÎÄ¼þÃû×Ö·ûascllÂë¶¼´óÓÚµÈÓÚ20h£¨°ü
+					À¨¿Õ¸ñ£©
+     477 01EE  73 F8				jae compare
+     478				
+     479 01F0  C6 84 0000 R 00			mov filename[si], 0
+     480					
+     481					;mov dl, filename[si+1]	
+								;ÔøÓÃÓÚ²âÊÔÊÇ·ñ
+					ÒÑ¾­µ½´ïÎÄ¼þÃûÄ©Î²
+     482					;call near ptr Tester
+     483				
+     484 01F5  5A				pop dx
+     485 01F6  5E				pop si
+     486 01F7  C3				retn
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-13
+
+
+     487 01F8				endfile endp
+     488				;--------------------------------------
+					---------------------------------------
+					--------------
+     489 01F8				row_calculating proc near	
+								;;¼ÆËãµ±Ç°Ò³ÐèÒ
+					ªÏÔÊ¾¶àÉÙÐÐ
+     490 01F8  53				push bx
+     491 01F9  50				push ax
+     492				
+     493 01FA  33 C0				xor ax, ax
+     494 01FC  33 DB				xor bx, bx
+     495 01FE  A1 024B R			mov ax, bytes_in_buf
+     496 0201  05 000F				add ax, 0fh
+     497 0204  B3 10				mov bl, 10h
+     498 0206  F6 F3				div bl
+     499 0208  A2 0245 R			mov row, al
+     500				
+     501 020B  58				pop ax
+     502 020C  5B				pop bx
+     503 020D  C3				retn
+     504 020E				row_calculating endp
+     505				;--------------------------------------
+					---------------------------------------
+					--------------
+     506 020E				printrows proc near
+     507 020E  51				push cx
+     508				
+     509 020F  33 C9				xor cx, cx
+     510 0211  8A 0E 0245 R			mov cl, row
+     511 0215  33 ED				xor bp, bp
+     512 0217				displayrow:
+     513 0217  E8 0224 R			call near ptr bytes_on_row_calc
+					ulating
+     514 021A  E8 0253 R			call near ptr show_this_row
+     515 021D  83 C5 10				add bp, 10h	
+     516 0220  E2 F5				loop displayrow
+     517					
+     518 0222  59				pop cx
+     519 0223  C3				retn
+     520 0224				printrows endp
+     521				;--------------------------------------
+					---------------------------------------
+					--------------
+     522 0224				bytes_on_row_calculating proc near
+								;ÓÃÀ´¼ÆËãµ±Ç°ÐÐ
+					ÓÐ¶àÉÙ×Ö½Ú
+     523 0224  83 F9 01				cmp cx, 1
+     524 0227  0F 85 024D R			jne ordinal
+     525				
+     526 022B  50				push ax
+     527 022C  53				push bx
+     528 022D  33 C0				xor ax, ax
+     529 022F  33 DB				xor bx, bx
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-14
+
+
+     530 0231  A1 024B R			mov ax, bytes_in_buf
+     531 0234  B3 10				mov bl, 10h
+     532 0236  F6 F3				div bl
+     533 0238  80 FC 00				cmp ah, 0
+     534 023B  0F 84 0242 R			je adjust
+     535 023F  EB 03 90				jmp assign
+     536 0242				adjust:
+     537 0242  B4 10				mov ah, 10h
+     538 0244				assign:
+     539 0244  88 26 0246 R			mov bytes_on_row, ah
+     540				
+     541 0248  5B				pop bx
+     542 0249  58				pop ax
+     543 024A  EB 06 90				jmp return1
+     544				
+     545 024D				ordinal:
+     546 024D  C6 06 0246 R 10			mov bytes_on_row, 10h
+     547 0252				return1:
+     548 0252  C3				retn
+     549 0253				bytes_on_row_calculating endp
+     550				;--------------------------------------
+					---------------------------------------
+					--------------
+     551 0253				show_this_row proc near
+     552 0253  50				push ax
+     553 0254  33 C0				xor ax, ax
+     554 0256  A0 0245 R			mov al, row
+     555 0259  50				push ax
+     556 025A  66| 53				push ebx
+     557				
+     558 025C  28 0E 0245 R			sub row, cl
+     559 0260  FE 06 0245 R			inc row
+     560 0264  66| 33 DB			xor ebx, ebx
+     561 0267  8A 1E 0245 R			mov bl, row
+     562 026B  C1 E3 04				shl bx, 4
+     563 026E  66| 03 1E 0247 R			add ebx, index
+     564 0273  66| 83 EB 10			sub ebx, 10h
+     565 0277  E8 012A R			call near ptr coordinate_calcul
+					ating		;Æ«ÒÆµØÖ·¼ÆËã
+     566 027A  E8 0153 R			call near ptr sub_show_this_row
+								;ÏÔÊ¾´Óbuf[bp]¿
+					ªÊ¼µÄbytes_on_row¸ö×Ö½Ú
+     567					
+     568 027D  66| 5B				pop ebx
+     569 027F  58				pop ax
+     570 0280  A2 0245 R			mov row, al
+     571 0283  58				pop ax
+     572 0284  C3				retn
+     573 0285				show_this_row endp
+     574				;--------------------------------------
+					---------------------------------------
+					--------------
+     575 0285				bytes_in_buf_calculating proc near
+     576 0285  66| 53				push ebx
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-15
+
+
+     577 0287  66| 50				push eax
+     578				
+     579 0289  66| A1 024D R			mov eax, file_size
+     580 028D  66| 8B 1E 0247 R			mov ebx, index
+     581 0292  66| 2B C3			sub eax, ebx
+     582 0295  66| 3D 00000100			cmp eax, 100h
+     583 029B  0F 83 02A2 R			jae full
+     584 029F  EB 0A 90				jmp rest
+     585 02A2				full:
+     586 02A2  C7 06 024B R 0100		mov bytes_in_buf, 100h
+     587 02A8  EB 04 90				jmp ending2
+     588 02AB				rest:
+     589 02AB  A3 024B R			mov bytes_in_buf, ax
+     590 02AE				ending2:
+     591 02AE  66| 58				pop eax
+     592 02B0  66| 5B				pop ebx
+     593 02B2  C3				retn
+     594 02B3				bytes_in_buf_calculating endp
+     595				;--------------------------------------
+					---------------------------------------
+					--------------
+     596 02B3				alternation proc near
+     597 02B3  66| 53				push ebx
+     598 02B5  66| 50				push eax
+     599 02B7  66| 52				push edx
+     600 02B9  66| 51				push ecx
+     601				
+     602 02BB  80 FC 49				cmp ah, 49h
+     603 02BE  0F 84 02DA R			je pageup
+     604 02C2  80 FC 51				cmp ah, 51h
+     605 02C5  0F 84 02FF R			je pagedn
+     606 02C9  80 FC 47				cmp ah, 47h
+     607 02CC  0F 84 031F R			je home
+     608 02D0  80 FC 4F				cmp ah, 4fh
+     609 02D3  0F 84 0000 U			je ending4
+file1.ASM(566): error A2009: Symbol not defined: ENDING4
+     610 02D7  E9 036A R			jmp return3
+     611				
+     612 02DA				pageup:
+     613 02DA  66| 81 3E 0247 R 0000		cmp index, 100h
+     614       0100			
+     615 02E3  0F 82 02F3 R			jb pageup_initialize
+     616 02E7  66| 81 2E 0247 R 0000		sub index, 100h
+     617       0100			
+     618 02F0  EB 78 90				jmp return3
+     619 02F3				pageup_initialize:
+     620 02F3  66| C7 06 0247 R 0000		mov index, 0
+     621       0000			
+     622 02FC  EB 6C 90				jmp return3
+     623				
+     624 02FF				pagedn:
+     625 02FF  66| 33 DB			xor ebx, ebx
+     626 0302  66| 8B 1E 0247 R			mov ebx, index
+     627 0307  66| 81 C3 00000100		add ebx, 100h
+     628				;	jc return3
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Page     1-16
+
+
+     629 030E  66| 3B 1E 024D R			cmp ebx, file_size
+     630 0313  0F 83 036A R			jae return3
+     631 0317  66| 89 1E 0247 R			mov index, ebx
+     632 031C  EB 4C 90				jmp return3
+     633				
+     634 031F				home:
+     635 031F  66|				xor index, index
+file1.ASM(589): error A2052: Improper operand type
+     636 0320  EB 48 90				jmp return3
+     637				
+     638				engding4:
+file1.ASM(592): error A2006: Phase error between passes
+     639 032B  66| 33 D2			xor edx, edx
+     640 032E  66| 33 C0			xor eax, eax
+     641 0331  66| A1 024D R			mov eax, file_size
+     642 0335  66| 8B 1E 024D R			mov ebx, file_size
+     643 033A  66| C1 C0 10			rol eax, 16
+     644 033E  8B D0				mov dx, ax
+     645 0340  66| C1 C0 10			rol eax, 16
+     646 0344  B9 0100				mov cx, 100h
+     647 0347  F7 F1				div cx
+     648 0349  83 FA 00				cmp dx, 0
+     649 034C  0F 84 035B R			je exactly
+     650 0350  66| 2B DA			sub ebx, edx
+     651 0353  66| 89 1E 0247 R			mov index, ebx
+     652 0358  EB 10 90				jmp return3
+     653 035B				exactly:
+     654 035B  66| 81 EB 00000100		sub ebx, 100h
+     655 0362  66| 89 1E 0247 R			mov index, ebx
+     656 0367  EB 01 90				jmp return3
+     657				
+     658 036A				return3:
+     659 036A  66| 59				pop ecx
+     660 036C  66| 5A				pop edx
+     661 036E  66| 58				pop eax
+     662 0370  66| 5B				pop ebx
+     663 0372  C3				retn
+     664 0373				alternation endp
+     665				;--------------------------------------
+					---------------------------------------
+					--------------
+     666				;--------------------------------------
+					---------------------------------------
+					--------------
+     667				;--------------------------------------
+					---------------------------------------
+					--------------
+     668				;--------------------------------------
+					---------------------------------------
+					--------------
+     669 0373				code ends
+     670				end main
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Size	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	16 Bit	0373	PARA	NONE	
+DATA . . . . . . . . . . . . . .  	16 Bit	0251	PARA	NONE	
+STACK1 . . . . . . . . . . . . .  	16 Bit	0FA0	PARA	NONE	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ADJUST . . . . . . . . . . . . .  	L NEAR	0242	CODE
+ALTERNATION  . . . . . . . . . .  	N PROC	02B3	CODE	Length = 00C0
+ASSIGN . . . . . . . . . . . . .  	L NEAR	0244	CODE
+
+BUF  . . . . . . . . . . . . . .  	L BYTE	0066	DATA	Length = 0100
+BYTES_IN_BUF . . . . . . . . . .  	L WORD	024B	DATA
+BYTES_IN_BUF_CALCULATING . . . .  	N PROC	0285	CODE	Length = 002E
+BYTES_ON_ROW . . . . . . . . . .  	L BYTE	0246	DATA
+BYTES_ON_ROW_CALCULATING . . . .  	N PROC	0224	CODE	Length = 002F
+
+CLEANSCREEN  . . . . . . . . . .  	N PROC	010C	CODE	Length = 001E
+COLOR  . . . . . . . . . . . . .  	N PROC	01AA	CODE	Length = 001B
+COMPARE  . . . . . . . . . . . .  	L NEAR	01E8	CODE
+CONVERT  . . . . . . . . . . . .  	L NEAR	00DE	CODE
+CONVERT32BIT_TO_HEX  . . . . . .  	N PROC	00D5	CODE	Length = 0019
+CONVERT8BIT_TO_HEX . . . . . . .  	N PROC	009C	CODE	Length = 0030
+COORDINATE . . . . . . . . . . .  	N PROC	01C5	CODE	Length = 0014
+COORDINATE_CALCULATING . . . . .  	N PROC	012A	CODE	Length = 0029
+
+DISPLAYROW . . . . . . . . . . .  	L NEAR	0217	CODE
+DISPLAY_BY_CONTROL . . . . . . .  	L NEAR	0044	CODE
+
+ENDFILE  . . . . . . . . . . . .  	N PROC	01E3	CODE	Length = 0015
+ENDING . . . . . . . . . . . . .  	L NEAR	0087	CODE
+ENDING2  . . . . . . . . . . . .  	L NEAR	02AE	CODE
+ENGDING4 . . . . . . . . . . . .  	L NEAR	032B	CODE
+ERROR  . . . . . . . . . . . . .  	L NEAR	008B	CODE
+EXACTLY  . . . . . . . . . . . .  	L NEAR	035B	CODE
+
+FILENAME . . . . . . . . . . . .  	L BYTE	0000	DATA
+FILESIZE . . . . . . . . . . . .  	L DWORD	0168	DATA
+FILE_SIZE  . . . . . . . . . . .  	L DWORD	024D	DATA
+FULL . . . . . . . . . . . . . .  	L NEAR	02A2	CODE
+
+HANDLE . . . . . . . . . . . . .  	L WORD	0166	DATA
+HINT1  . . . . . . . . . . . . .  	L BYTE	016C	DATA
+HINT2  . . . . . . . . . . . . .  	L BYTE	0185	DATA
+HOME . . . . . . . . . . . . . .  	L NEAR	031F	CODE
+
+IFOR . . . . . . . . . . . . . .  	L NEAR	01B4	CODE
+INDEX  . . . . . . . . . . . . .  	L DWORD	0247	DATA
+
+Microsoft (R) Macro Assembler Version 5.10                  1/1/19 22:31:44
+
+                                                             Symbols-2
+
+
+LIT  . . . . . . . . . . . . . .  	L NEAR	01C1	CODE
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	0000	CODE
+MOVE_BUF_TO_S  . . . . . . . . .  	L NEAR	016E	CODE
+
+ORDINAL  . . . . . . . . . . . .  	L NEAR	024D	CODE
+OUTPUT . . . . . . . . . . . . .  	L NEAR	00FA	CODE
+OUTPUTCHARARRAY  . . . . . . . .  	N PROC	0095	CODE	Length = 0007
+OUTPUT_S . . . . . . . . . . . .  	N PROC	00EE	CODE	Length = 001E
+
+PAGEDN . . . . . . . . . . . . .  	L NEAR	02FF	CODE
+PAGEUP . . . . . . . . . . . . .  	L NEAR	02DA	CODE
+PAGEUP_INITIALIZE  . . . . . . .  	L NEAR	02F3	CODE
+PATTERN  . . . . . . . . . . . .  	L BYTE	01E7	DATA
+PRINT  . . . . . . . . . . . . .  	N PROC	01A3	CODE	Length = 0007
+PRINTROWS  . . . . . . . . . . .  	N PROC	020E	CODE	Length = 0016
+
+REST . . . . . . . . . . . . . .  	L NEAR	02AB	CODE
+RETURN . . . . . . . . . . . . .  	L NEAR	01B3	CODE
+RETURN1  . . . . . . . . . . . .  	L NEAR	0252	CODE
+RETURN3  . . . . . . . . . . . .  	L NEAR	036A	CODE
+ROW  . . . . . . . . . . . . . .  	L BYTE	0245	DATA
+ROW_CALCULATING  . . . . . . . .  	N PROC	01F8	CODE	Length = 0016
+
+S  . . . . . . . . . . . . . . .  	L BYTE	0199	DATA
+SHOWALINE  . . . . . . . . . . .  	L NEAR	018B	CODE
+SHOW_THIS_PAGE . . . . . . . . .  	N PROC	01D9	CODE	Length = 000A
+SHOW_THIS_ROW  . . . . . . . . .  	N PROC	0253	CODE	Length = 0032
+STRCPY_S_PATTERN . . . . . . . .  	L NEAR	0139	CODE
+SUB_SHOW_THIS_ROW  . . . . . . .  	N PROC	0153	CODE	Length = 0050
+
+T  . . . . . . . . . . . . . . .  	L BYTE	0235	DATA
+TESTER . . . . . . . . . . . . .  	N PROC	00CC	CODE	Length = 0009
+
+@CPU . . . . . . . . . . . . . .  	TEXT  3343		
+@FILENAME  . . . . . . . . . . .  	TEXT  file1		
+@VERSION . . . . . . . . . . . .  	TEXT  510		
+
+
+    624 Source  Lines
+    624 Total   Lines
+     69 Symbols
+
+  47160 + 382304 Bytes symbol space free
+
+      0 Warning Errors
+      3 Severe  Errors

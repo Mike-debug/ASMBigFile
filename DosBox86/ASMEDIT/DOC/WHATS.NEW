@@ -1,0 +1,280 @@
+We know, it's pretty long. But it is also a list for us to keep track with
+all changes...
+
+-------------------------------------------------------------------------------
+1.82 (07/08/96):
+
+added:
+- General               : ASM Shell replaces ASM BOX because CPUID  
+
+improved:
+- Window List           : search for file name by typing it
+- Shell                 : reload modified files after return
+- Logfile               : more informations to help us finding bugs
+- Help texts            : some minor corrections, Troubleshooting added
+
+bugfix:
+- Debug|System Info &
+  Options|Preferences   : crash on 386 under OS/2 and early 486 (ever)
+- Options|Load		: changed sytanx colors were load, but not set
+- Options|Load from INI : crash if loading from
+- Search|Replace dialog : options were blank and not setable
+- Colored error line    : was wrong after editing/was not deleted after shell
+- Editor                : Word left,rigth wrong when cursor was after line end
+                        : crash if insert text block after line end
+                        : minor bugs/bad behaviors fixed
+- Calculator            : modi/switches couldn't be changed without mouse
+
+-------------------------------------------------------------------------------
+1.81 (17/07/96):
+
+added:
+- General               : write errors to logfile
+
+improved:
+- Install program       : now asks before overwriting a file
+- Help                  : VESA functions & Troubleshooting topic added
+                        : some minor corrections (FRSTOR, SMSD, SETALC etc.)
+- Definitions           : !MCMPL, !MNAME, !MPATH, !MNAEX, !MPANA, !WRDUC,
+                          !ASKUS added
+- ASM Box               : prints the executed program w/ params to RESULT.ERR
+
+bugfix:
+- Options|Preferences &
+  Debug|System Info     : crash on CPU's without CPUID instruction (386/486)
+- Run|Tool              : crashed if no edit window was open
+- Run|Program           : erased program instead of executing it
+- Assembly/Link/Make    : crashed if target was EXE
+- General               : certain minor problems with OS/2 windowed mode
+                        : ASM Edit wouldn't start on systems w/o FPU
+
+-------------------------------------------------------------------------------
+1.8 (07/07/96):
+
+added:
+- General               : DPMI support, EMS and ASM Shell no longer needed
+                        : ASM Box, a virtual DOS Box for output redirection
+- Editor                : swap file support -> files up to 256 MB can now
+                          be edited
+                        : Move block tabsize left/right (<Ctrl>+<B> <L>/<R>)
+                        : Comment/Uncomment block (<Ctrl>+<B><C>/<U>)
+                        : QuickHelp displays all keyboard commands
+                        : cursor can be placed after line end
+                        : error line will be colored
+- Help                  : MMX opcodes
+- File|Open,|SaveAs,
+  Window|Close          : numbers in window title for same file
+- Run|Tool              : definition parsing for command line
+- Assemble|Make         : support of make files
+- Options|P. & C. lines : choose a supported program via list, add new
+                        : WASM, ELASS/ELINK support
+                        : new options dialog for programs
+- Options|Directories   : ASM files search path
+- Options|Tools         : Definitions for command line
+- Options|Env.|Pref.    : VESA support
+- Options|Env.|Editor   : user defined delimiter for comments, strings
+- Options|Env.|Virt.Mem : set swap drive
+- Help|Tutorial         : ASM Edit's tutorial for beginners
+
+improved:
+- Editor                : search & replace can be aborted via <ESC>
+                        : undo on the same line is done word by word
+- Result Win            : Watcom Assembler (WASM) error convert
+                        : Echo Lake Assembler (ELASS) error convert
+- Help                  : Extra keyword color for assembler mnemonics
+- Options|Load/Save INI : more options from/to emergency file
+
+bugfix:
+- General               : new internal video support for better use with
+                          Windows 95
+- Editor                : crash fixed, if cursor at file end in overwrite
+                          mode and entering a character
+                        : WordLeft corrected at very first word in file
+                        : Ctrl-B/-K handling after block marking w/ shift
+                        : selection fixed, if the only selected line is to
+                          be deleted
+                        : many #216 GP faults corrected 
+- Result Win            : garbage during scroll to error line if file shorter
+                          than window
+- Help                  : error #213 if too many old help topics
+- Assemble|Link         : '!MKCOM' always added a '/t' independent of target
+- Assemble|Build Lib.   : garbage in input line, if path non-existent
+- Tools|Converter       : several fixes in instruction line
+- Tools|User tool       : warning if batch file is to be executed
+- Options|Load desktop  : video usermode was not set
+                        : failed if a file to load was not found
+                        : options for Find and Search/Replace were not saved
+- Options|Load/Save INI : load/save now to ASM Edit's run path instead of
+                          act. dir
+                        : now sets/resets syntax coloring after loading
+
+-------------------------------------------------------------------------------
+1.7 (02/18/96) Shareware:
+
+added:
+- Assemble|Link         : link only
+- Edit|Change Style     : "CHAST LOOK" - CHAnge STyle and LOOK of source
+- File|Restore          : swap BAK file with original
+- Debug|Memory info     : show free edit memory only
+- Options               : load and save INI file
+- Options|Editor        : customized video mode support
+- Options|External      : definitions for command lines
+- Result window         : error trace for Microsoft's 'MASM.EXE' & 'ML.EXE'
+- Assemble|Library Man. : build libraries
+- Assembler             : support of Microsoft's 'MASM.EXE' & 'ML.EXE'
+- Linker                : support of Microsoft's 'LINK.EXE'
+                        : support of additional object files
+                        : support of library files
+- Options|Envrnm.|Colors: modify colors of desktop/menus/windows etc.
+
+improved:
+- Tools|Calculator      : completely new
+- Edit Windows          : completely new editor
+                        : max. editable file size up to 64 MByte
+                        : syntax coloring for ASM files
+                        : EMS memory is now available for editing, too
+- Tools|Converter       : instruction line - up to 686, bugfixes
+- Options|Tools|New     : browse button
+- Options|P. & C. lines : browse buttons
+- Help                  : very fast resize in index
+                        : wrap for enumerations
+                        : center selected topic
+                        : restore selected topic and position when <ALT>+<F1>
+- Tools|ASCII Chart     : magnify char
+
+bugfix:
+- Tools|ASCII Chart     : key navigation fixed
+- Options|Load          : destroyed the current options, even with AutoSave ON
+- Options|Save          : AutoSave to 'ASMEDIT.DSK' instead to last saved
+- Debug|System Info     : CPUID fixed
+- Help file             : FPU and ASM part revised
+                        : hang up if help file doesn't exist or was empty
+- Help|Search Topic     : bug when help window was not first window on desktop
+- Shell                 : wasn't entered if act. edit window was 'Untitled'
+                        :  & all other 'Untitled' windows lost their contents
+                        :  & the file name the user was prompted was forgotten
+- Video mode change     : out-of-screen-bug for tools fixed
+- ASM Shell             : renaming ASMSHELL.EXE causes no longer hang up
+                        : can't be started now if already in ASM Edit's 
+                          DOS Shell
+
+-------------------------------------------------------------------------------
+1.6 (05/01/95) Test:
+
+added:
+- File|Print            : print file
+- Tools|Converter       : instruction line (disassembly)
+- Help|Topic search     : search for word under cursor in active edit window
+                        : search for instruction in converter
+
+improved:
+- Help                  : help file now packed
+                        : search string for topic is shown in window title
+- Debug|System Info     : CPUID support 
+- Options|Save as       : modifies desktop name in menu system
+
+bugfix:
+- General               : memory losts due error in string collection
+- Help file             : completly revised (EGA & VGA, 586 added, bugfixes)
+- HelpWindow            : resize (F5) causes false text wrap since width of
+                          topic was not updated
+- ResultWindow          : trace include failed in most cases
+- Options|Open          : didn't work at all
+- Options|Save          : used "ASMEDIT.DSK" instead last saved as default
+
+-------------------------------------------------------------------------------
+1.5 (04/02/95) Test:
+
+added:
+- ResultWindow          : errors in include files with error trace
+- File|New,|Open        : window numbers
+- Options|Tools         : modify/new tool
+- Tools|List            : run user tool
+- ExecProc              : now runtime errors cause ASM Shell to restart 
+                          ASM Edit for an error description via Help
+- ASM Shell             : delete RESULT if 0 bytes long before program end
+- Debug|User screen     : switches now to user screen via ALT+F5
+
+improved:
+- FileMenu              : same file only once in list
+- Help                  : faster scrolling in index
+                        : select topic via typing characters
+- Debug|Info            : target & system info added
+- Options|Directories   : automatical update of assembler command line
+                        : delete RESULT in old executable directory
+
+bugfix:
+- File|New,|Open        : minimum window size in cascade fixed
+- General               : some commands were disabled at startup if act. edit
+                          window = last opened edit window
+- Run|Run               : program to execute was searched in the source path
+                          instead the output path
+- ASM Shell             : returned DOS exit code fixed
+                        : messages onto screen before redirection
+                        : cmdlines for exec couldn't get longer than 79 chars
+                        : RESULT has to be zero terminated for correct piping
+- Shell                 : CloseAll before entering
+- Debug|Info            : without EMS the info dialog never appeared or
+                          crashed the system
+- ResultWindow          : size/position update if video mode changes
+
+-------------------------------------------------------------------------------
+1.5 (03/13/95) BETA!:
+
+- AsmShell              : no swapping needed - much more memory in DOS shells
+
+-------------------------------------------------------------------------------
+1.4 (02/25/95):
+
+added:
+- Converter             : decimal line
+- OpenWindow            : command line parameters
+- FileMenu              : up to 9 names of closed files
+- DebugMenu
+
+improved:
+- Options|Save          : with open result file window
+- File|New              : read dummy file and display as 'Untitled'
+
+bugfix:
+- File|New,|Open        : size of opened window corrected
+- Save options          : with open help window
+- Go to line number     : taken over from v1.1 (Oops)
+- ResultWindow          : w/o open assembled file it didn't worked
+- assembler helpfile    : FPU part corrected
+- Primary file          : if prim=current wrong file name 
+
+-------------------------------------------------------------------------------
+1.3 (12/29/94):
+
+added:
+- Help                  : Assembler help
+
+improved:
+- Help                  : Contents, Index, Previous, Using help
+
+-------------------------------------------------------------------------------
+1.2 (12/26/94):
+
+added:
+- Tools                 : ASCII-Chart, Calculator, Converter
+- Options               : Assembler & Linker options dialogs
+
+bugfix:
+- Windows|List          : functioning correctly now
+
+-------------------------------------------------------------------------------
+1.1 (03/30/94):
+
+added:
+- Options|Preferences|Mouse
+- Options|Preferences|Editor
+- Window|List
+
+improved:
+- Result file handling
+
+-------------------------------------------------------------------------------
+1.0 (03/19/94):
+
+- original

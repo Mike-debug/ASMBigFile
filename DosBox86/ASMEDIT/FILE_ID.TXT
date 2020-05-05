@@ -1,0 +1,11 @@
+-- ASM Edit v1.82 Shareware ---
+IDE with syntax-colors for ASM
+files, used with external 
+Assembler, Linker and Debugger 
+programs. Help system with 
+mnemonics up to Pentium Pro, 
+FPU and MMX instructions, VGA 
+programming, interrupt list, 
+DOS tables and formats, etc. 
+ASM Tutorial & build-in tools.
+--- 07/08/96            1/1 ---

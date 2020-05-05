@@ -1,0 +1,7 @@
+bfSize£º	1
+Compressed£º185729024
+biWidth: 	65536
+biHeight:	65544
+biBitCount:	185729025
+colors=		2
+data begin: 480

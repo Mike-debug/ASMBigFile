@@ -1,0 +1,89 @@
+Shareware and Full version
+==========================
+
+If you want to continue using ASM Edit after the 30 days trial period you 
+can have to order a full version of ASM Edit. 
+
+This version has some important advantages:
+
+- You will get the newest version including all actual tutorial files.
+- No shareware page is popping up every 10 minutes.
+- the standalone program ASM Help for help access only
+- You get bugfixes/upgrades for minor changes FREE (e.g. if you register 
+  v1.8 you get all versions up to v1.89 for FREE, but NOT v1.9)
+- You can get technical support and help.
+- You can order upgrades for further versions for a reduced price.
+
+For private use the full version of ASM Edit is registered to you.
+
+If you want purchase a version of ASM Edit for commercial or govermental
+use, please contact us first. We have also interesting offers for Site 
+Licenses if you need more than 5 registrations.
+
+
+How to order 
+============
+
+Please load the file "ORDER.FRM" and fill it out. Then print it via
+File|Print.
+
+You can print it via DOS command, too:
+        PRINT ORDER.FRM
+
+If you don't own a printer you can write the most important items on a sheat
+of paper:
+- current version of ASM Edit
+- your (REAL!) name and address
+  (for governmental or commercial use: add name of firm or institute, too)
+- if you have one: your e-mail address
+- how you are going to pay
+- your signature
+
+Send your order form along with the money to the following address:
+
+        Olaf Krusche
+        Sportlerweg 7
+        02692 Doberschau
+        Germany
+
+If you want to transfer the money via direct money transfer from bank to 
+bank or pay via credit card, send an e-mail to <ok3@irz.inf.tu-dresden.de>.
+
+
+Upgrading
+=========
+
+If you order a full version of ASM Edit you will be notified by us of new ASM 
+Edit versions. You can then upgrade to the new version for a reduced price.
+
+
+Payment
+=======
+
+Cash:
+- DM (Deutsche Mark - German Marks)
+- US Dollar (A money order is not cash!)
+- other currencies: Please read the file "PRICES.TXT".
+  If you want to pay with a currency that is not covered by that file,
+  do the following: Convert the DM amount (including cheque surcharge
+  if you pay by cheque or money order, see below) to your own currency
+  using the most current (today's) exchange rate, then add 5%.
+- Do NOT send any coins, bananas, chocolade etc., because we can't exchange
+  them.
+
+Cheque:
+- Eurocheque: Please note the amount in DM so no extra surcharge is required.
+- Foreign cheque or money order (+ 10 $US or 15 DM): These kind of cheques
+  involve high costs for us, therefore you have to add another 10 $US or 15 DM
+  surcharge if you pay this way. Use this way if you don't want to send cash
+  through the mail (although you could send it as "registered mail" or
+  "recorded delivery") and if you can't pay by Eurocheque.
+
+It is not possible to pay by C.O.D. (cash on delivery). We won't accept 
+International Money Transfer, because it is rather slow (depending on the 
+country), and it involves high costs for us (18 DM, that's about 12 $US).
+
+(Thanks go to Oliver Fromme, author of QPV - Quick Picture Viewer, for his
+help in this matter.)
+
+07/08/96  Olaf Krusche, Tilo Elstner
